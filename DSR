@@ -1,0 +1,27 @@
+23-May
+
+1) Project setup and created providers.
+2) FirebaseUI implementation.
+3) Firestore plugin configuration.
+4) Login data save in firestore.
+
+24-May
+
+1) Login screen design.
+2) Side menu design and show active menu.
+3) FCM plugin implementation.
+4) Show user info in side menu.
+
+25-May
+
+1) Edit Profile screen design.
+2) Camera plugin implementation.
+3) Upload image on firebase storage and update in firestore.
+4) Update profile
+
+29-May
+1) Create API for discussion detail.
+2) Impletment discussion detail API.
+3) Add comment functionality.
+4) Show comments with user info.
+

@@ -1,0 +1,48 @@
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <form
+      [formGroup]='form'
+      (ngSubmit)='saveDocument(form.value)'>
+  
+      <ion-item>
+        <ion-label stacked>Title</ion-label>
+        <ion-input
+          type='text'
+          formControlName='discussionTitle'
+          [(ngModel)]='discussionTitle'>
+        </ion-input>
+      </ion-item>
+  
+      <ion-item>
+         <ion-label stacked>Description:</ion-label>
+         <ion-input
+            type="text"
+            formControlName="discussionDesc"
+            [(ngModel)]="discussionDesc"></ion-input>
+       </ion-item>
+   
+       <ion-item>
+         <button
+           ion-button
+           block
+           color="primary"
+           text-center
+           padding-top
+           padding-bottom
+           [disabled]="!form.valid">
+               Add a new discussion
+            </button>
+       </ion-item>
+  
+    </form>
+    
+  </ion-content>
+  

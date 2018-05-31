@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Discussion Detail</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item *ngIf="discussionDetail.discussionTitle">
+    <ion-avatar item-start>
+      <img src="{{userInfo.photoURL ? userInfo.photoURL : 'assets/images/chatterplace.png'}}" onError="this.src='assets/images/chatterplace.png'">
+    </ion-avatar>
+    <h2>{{userInfo.displayName}}
+      <span class="cmnt-date">{{ getDate(discussionDetail.createdAt) }}</span>
+    </h2>
+    <h3>{{discussionDetail.discussionTitle}}</h3>
+    <p text-wrap>{{discussionDetail.discussionDesc}}</p>
+  </ion-item>
+  <div class="comments-sec">
+    <h3 padding-left>Comments</h3>
+    <ion-list [virtualScroll]="comments">
+      <ion-item *virtualItem="let comment">
+        <ion-avatar item-start>
+          <img src="{{comment.photoURL ? comment.photoURL : 'assets/images/chatterplace.png'}}" onError="this.src='assets/images/chatterplace.png'">
+        </ion-avatar>
+        <h2>{{comment.displayName}}
+          <span class="cmnt-date">{{ getDate(comment.commentDate) }}</span>
+        </h2>
+        <p text-wrap>{{comment.comment}}</p>
+      </ion-item>
+    </ion-list>
+    <form [formGroup]='form' (ngSubmit)='addComment(form.value)'>
+      <ion-item>
+        <ion-label stacked>Comment:</ion-label>
+        <ion-input type="text" formControlName="comment" [(ngModel)]="comment"></ion-input>
+      </ion-item>
+      <ion-item>
+        <button ion-button block color="primary" text-center padding-top padding-bottom [disabled]="!form.valid">
+          Add comment
+        </button>
+      </ion-item>
+    </form>
+  </div>
+</ion-content>

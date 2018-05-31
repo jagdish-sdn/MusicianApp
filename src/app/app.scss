@@ -14,3 +14,74 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.menu-profile{
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+}
+.profile-info{
+    position: absolute;
+    bottom: 15px;
+    font-size: 1.9rem;
+}
+.setting-icon{
+    font-size: 2.0rem;
+    float: right;
+}
+.logout{
+    color: map-get($colors, light)
+}
+ion-icon{
+    color: map-get($colors, light)
+}
+ion-header.sidemenu-header.header {
+    background-color: map-get($colors, primary);
+    color: map-get($colors, light);
+}
+.toolbar-background{
+    background: map-get($colors , primary );    
+}
+ion-navbar .toolbar-title{
+    color: map-get($colors, light)
+}
+ion-navbar ion-icon{
+    color: map-get($colors, light)
+}
+.sidemenu-icon{
+    font-size: xx-large;
+}
+.side-menu-title{
+    padding-left: 16px;
+    position: absolute;
+    top: 5px;
+}
+.activeHighlight{
+    background-color: map-get($colors , light );
+}
+.activeHighlight ion-icon{
+    color: map-get($colors, primary) !important;
+}
+.activeHighlight .side-menu-title{
+    color: map-get($colors, primary) !important;
+}
+.displayname{
+    font-size: x-large;
+}
+.sideemail{
+    margin-bottom: 0px;
+}
+.cmnt-date{
+    position: inherit;
+    float: right;
+    color: #c5c5c5;
+    font-size: 1.4rem;    
+}
+.profile-email{
+    font-size: 1.4rem;
+}
+.network-empty{
+    text-align: center;
+    margin-top: 34vh !important;
+    font-size: 2.6rem;
+    font-weight: 400;
+}
