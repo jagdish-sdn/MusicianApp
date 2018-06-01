@@ -3,7 +3,9 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>chat</ion-title>
+    <ion-title text-capitalize>
+        <img class="title-image" src="{{chatWith.photoURL ? chatWith.photoURL : 'assets/images/chatterplace.png'}}" onError="this.src='assets/images/chatterplace.png'" > <span class="chat-displayname">{{chatWith.displayName}}</span>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>

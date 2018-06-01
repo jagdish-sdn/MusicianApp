@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FirebaseUI for web - Ionic demo
 
 This is a demo [Ionic](http://ionicframework.com/docs/) project using [FirebaseUI-web](https://github.com/firebase/firebaseui-web).
@@ -109,3 +110,6 @@ export class FirebaseuiProvider {
 ### Add FirebaseUI to any page you like
 
 See example at `src/pages/login/login.ts`.
+=======
+# MusicianApp
+>>>>>>> 003aac365f822140c5e3f5cf8f5851e42ec7cc52

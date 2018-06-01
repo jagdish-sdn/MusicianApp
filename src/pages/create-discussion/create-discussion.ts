@@ -100,6 +100,7 @@ export class CreateDiscussionPage {
 
       // Call the DatabaseProvider service and pass/format the data for use
       // with the addDocument method
+      this._Common.presentLoading();
       this._DB.addDocument(this._COLL,
         {
           discussionTitle: discussionTitle,
@@ -110,10 +111,12 @@ export class CreateDiscussionPage {
         })
         .then((data) => {
           this.clearForm();
+          this._Common.dismissLoading();
           this._Common.showToast(messages.createDisSuccess);
           this.navCtrl.setRoot(HomePage)
         })
         .catch((error) => {
+          this._Common.dismissLoading();
           this._Common.showToast(messages.createDisFailed+  error.message);
         });
   }

@@ -6,16 +6,16 @@
     <ion-title>Network</ion-title>
   </ion-navbar>
   <ion-toolbar color='primary'>
-    <ion-searchbar (input)="onSearchInput()"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchText" (input)="search(searchText)" (ionClear)="onClear()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-list no-lines>
-    <ion-item *ngFor="let req of requests">
+    <ion-item *ngFor="let req of requests" (click)="goToChat(req)">
       <ion-avatar item-start>
         <img src="{{req.photoURL ? req.photoURL : 'assets/images/chatterplace.png'}}" onError="this.src='assets/images/chatterplace.png'">
       </ion-avatar>
-      <h2>{{req.displayName}}</h2>
+      <h2 text-capitalize>{{req.displayName}}</h2>
       <p>{{req.userLocation}}</p>
       <ion-avatar *ngIf="req.isAccepted == 1" item-end>
         <span (click)="acceptReq(req.uid)">Accept</span> &nbsp;&nbsp;
@@ -23,7 +23,7 @@
       </ion-avatar>
     </ion-item>
   </ion-list>
-  <!-- <h4 *ngIf="requests.length == 0 && showMe" class="network-empty">You haven’t added anyone to your network.</h4> -->
+  <h4 *ngIf="tempArr.length == 0 && showMe" class="network-empty">You haven’t added anyone to your network.</h4>
   <ion-fab bottom right (click)="goToSearchUser()">
     <button ion-fab>
       <ion-icon name="add"></ion-icon>

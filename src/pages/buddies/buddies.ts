@@ -23,9 +23,6 @@ export class BuddiesPage {
     public _DB: DatabaseProvider,
     public common: CommonProvider
   ) {
-    // this._DB.getAllFriends(this.auth.uid).then((res)=>{
-    //   console.log("friends ", res)
-    // })
   }
 
   ionViewDidLoad() {

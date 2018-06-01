@@ -1,3 +1,15 @@
 page-chat {
-
+    .title-image {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+    .chat-displayname{
+        position: absolute;
+        top: 12px;
+        padding-left: 8px;
+    }
+    .toolbar-title{
+        padding: 0;
+    }
 }

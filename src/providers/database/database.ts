@@ -1,23 +1,16 @@
-// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-
-// Import firebase and firestore
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import { collections } from '../../config/env-example';
-
 
 @Injectable()
 export class DatabaseProvider {
 
   private _DB: any;
-
   constructor(
   ) {
     this._DB = firebase.firestore();
-    // const settings = {/* your settings... */ timestampsInSnapshots: true};
-    // this._DB.settings(settings);
   }
 
   /**
@@ -167,12 +160,6 @@ export class DatabaseProvider {
   }
 
 
-  /**
-   * Retrive discussion detail with comments
-   * 
-   * @public
-   * @param {collection name & docid}
-   */
   /*
    * Return discussions from specific database collection
    */
@@ -188,7 +175,7 @@ export class DatabaseProvider {
             this._DB.collection("users")
               .where("uid", "==", doc.data().userId)
               .get()
-              .then((snapres) => {
+              .then((snapres) => {                
                 if (snapres.docs.length != 0) {
                   obj = doc.data();
                   obj.id = doc.id;
@@ -346,16 +333,13 @@ export class DatabaseProvider {
         .where("uid", "==", uid)
         .get()
         .then((querySnapshot) => {
-          console.log("querySnapshot ======= ", querySnapshot)
           let obj: any = [];
           if (querySnapshot.docs.length == 0) {
             resolve(obj);
           } else {
             let doc = querySnapshot.docs[0];
-            console.log("**********doc", doc)
             obj = doc.data();
             obj.id = doc.id;
-            console.log("**********obj", obj.friends.length)            
             for (let i = 0; i < obj.friends.length; i++) {              
               let frnd = obj.friends[i];
               this.getProfile(frnd.uid).
@@ -480,7 +464,6 @@ export class DatabaseProvider {
            * update friend request isaccepted in friend request collection
            */
           let removeIndex = reqArr.map(function (item) { return item.sentFrom; }).indexOf(reqFrom);
-          console.log(reqArr, "before req Arr =========", removeIndex)
           reqArr.splice(removeIndex, 1);
           this._DB.collection(collections.friendReq).doc(docId)
             .update({ sentBy: reqArr });
@@ -538,10 +521,8 @@ export class DatabaseProvider {
    */
 
   rejectReq(reqFrom: string, reqArr, docId): Promise<any> {
-    let currentDate = new Date();
     return new Promise((resolve, reject) => {
       let removeIndex = reqArr.map(function (item) { return item.sentFrom; }).indexOf(reqFrom);
-      console.log(reqArr, "before req Arr =========", removeIndex)
       reqArr.splice(removeIndex, 1);
       this._DB.collection(collections.friendReq).doc(docId)
         .update({ sentBy: reqArr })

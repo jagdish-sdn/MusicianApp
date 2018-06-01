@@ -9,7 +9,7 @@
 <ion-content>
   <ion-list [virtualScroll]="discussions">
     <ion-item *virtualItem="let discussion" (click)="detail(discussion.id)">
-      <h2>{{ discussion.discussionTitle }}</h2>
+      <h2 text-capitalize>{{ discussion.discussionTitle }}</h2>
       <p>{{ discussion.discussionDesc}}</p>
       <ion-note item-end>{{ getDate(discussion.createdAt) }}</ion-note>
     </ion-item>

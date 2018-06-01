@@ -6,7 +6,8 @@ import * as firebase from 'firebase';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CommonProvider } from '../../providers/common/common';
 import { PopoverController } from 'ionic-angular';
-import { PopoverComponent } from '../../components/popover/popover'
+import { PopoverComponent } from '../../components/popover/popover';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -45,9 +46,14 @@ export class DiscussionDetailPage {
     this._DB.getDiscussionDetail(collections.disscussion, id)
     .then((result) => {
       console.log("result ", result);
-      this.discussionDetail = result;
-      this.userInfo         = result.userInfo;
-      this.comments         = result.comments;
+      if(!this.common.isEmpty(result)) {
+        this.discussionDetail = result;
+        this.userInfo         = result.userInfo;
+        this.comments         = result.comments;
+      } else {
+        this.common.showToast("Failed!")
+        this.navCtrl.setRoot(HomePage);
+      }
       this.common.dismissLoading();
     })
     .catch((err) => {

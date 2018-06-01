@@ -4,6 +4,7 @@ import { DatabaseProvider } from '../../providers/database/database';
 import { CommonProvider } from '../../providers/common/common'
 import * as firebase from 'firebase';
 import { BuddiesPage } from '../buddies/buddies';
+import { ChatPage } from '../chat/chat';
 
 @IonicPage()
 @Component({
@@ -11,20 +12,21 @@ import { BuddiesPage } from '../buddies/buddies';
   templateUrl: 'network-list.html',
 })
 export class NetworkListPage {
-  public toggled: boolean = false;
-  public requests : any = [];
-  public friends : any = [];
-  public showMe : boolean = false;
-  public currentUser : any = firebase.auth().currentUser;
-  public reqTempArr : any = [];
+  public toggled      : boolean = false;
+  public requests     : any[] = [];
+  public friends      : any = [];
+  public showMe       : boolean = false;
+  public currentUser  : any = firebase.auth().currentUser;
+  public reqTempArr   : any = [];
   public frndReqDocId : string;
-  public frndDocId : string;
+  public frndDocId    : string;
+  public tempArr      : any = [];
   constructor(
     public navCtrl: NavController,
-     public navParams: NavParams,
-     public _DB: DatabaseProvider,
-     public common: CommonProvider
-    ) {
+    public navParams: NavParams,
+    public _DB: DatabaseProvider,
+    public common: CommonProvider
+  ) {
   }
 
   ionViewDidLoad() {
@@ -39,71 +41,95 @@ export class NetworkListPage {
    * @param{}
    */
 
-  friendRequests(){
+  friendRequests() {
     this._DB.friendReqList(this.currentUser.uid)
-    .then((result) =>{
-      this.frndReqDocId = result.id;
-      this.requests = result.sentBy;
-      this.showMe = true;
-      console.log("=======", result)
-      this.requests.forEach(element => {
-        this.reqTempArr.push({
-          sentFrom: element.sentFrom,
-          isAccepted: element.isAccepted,
-          tiemstamp: element.tiemstamp
-        })
+      .then((result) => {
+        this.frndReqDocId = result.id;
+        this.requests = result.sentBy;
+        this.showMe = true;
+        this.requests.forEach(element => {
+          this.reqTempArr.push({
+            sentFrom: element.sentFrom,
+            isAccepted: element.isAccepted,
+            tiemstamp: element.tiemstamp
+          })
+        });
+      })
+      .catch((error) => {
+
       });
-    })
-    .catch((error) => {
-
-    });
   }
 
-  friendsList(){
+  friendsList() {
     this._DB.friendList(this.currentUser.uid)
-    .then((result) =>{
-      this.frndDocId = result.id;
-      this.friends = result.friends;
-      this.requests = Object.assign(this.requests ? this.requests : [], this.friends ? this.friends : []);
-    })
-    .catch((error) => {
-    });
+      .then((result) => {
+        this.frndDocId = result.id;
+        this.friends = result.friends;
+        this.requests = Object.assign(this.requests ? this.requests : [], this.friends ? this.friends : []);
+        this.tempArr = this.requests;
+      })
+      .catch((error) => {
+      });
   }
 
-  acceptReq(uid){
+  acceptReq(uid) {
     this._DB.acceptReq(uid, this.currentUser.uid, this.reqTempArr, this.frndReqDocId)
-    .then((result) => {
-      var removeIndex = this.requests.map(function(item) { return item.uid; }).indexOf(uid);
-      this.requests[removeIndex].isAccepted = 2;
-      console.log("success ", result)
-    })
-    .catch((error) => {
-      console.log("error ", error)
-    })
+      .then((result) => {
+        var removeIndex = this.requests.map(function (item) { return item.uid; }).indexOf(uid);
+        this.requests[removeIndex].isAccepted = 2;
+      })
+      .catch((error) => {
+        console.log("error ", error)
+      })
   }
 
-  rejectReq(uid){
+  rejectReq(uid) {
     this._DB.rejectReq(uid, this.reqTempArr, this.frndReqDocId)
-    .then((result) => {
-      var removeIndex = this.requests.map(function(item) { return item.uid; }).indexOf(uid);
-      this.requests.splice(removeIndex, 1);
-      console.log("success ", result)
-    })
-    .catch((error) => {
-      console.log("error ", error)
-    })
+      .then((result) => {
+        var removeIndex = this.requests.map(function (item) { return item.uid; }).indexOf(uid);
+        this.requests.splice(removeIndex, 1);
+      })
+      .catch((error) => {
+        console.log("error ", error)
+      })
   }
 
-  goToSearchUser(): void{
+  goToSearchUser(): void {
     this.navCtrl.push(BuddiesPage);
   }
 
-  onSearchInput(): void{
-
+  search(value) {
+    if (!value) {
+      this.returnBlank();
+    } else {
+      this.requests = Object.assign([], this.tempArr).filter(
+        item => {
+          if (item.displayName.toLowerCase().indexOf(value.toLowerCase()) > -1) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+    }
   }
 
-  public toggle(): void {
+  returnBlank() {
+    this.requests = Object.assign([], this.tempArr);
+  }
+
+  onClear() {
+    this.returnBlank();
+  }
+
+  toggle(): void {
     this.toggled = !this.toggled;
- }
+  }
+
+  goToChat(item){
+    console.log(item)
+    if(!item.isAccepted || item.isAccepted == 2){
+      this.navCtrl.push(ChatPage, {user: item})
+    }    
+  }
 
 }
